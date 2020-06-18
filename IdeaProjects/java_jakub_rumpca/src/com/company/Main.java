@@ -18,7 +18,12 @@ public class Main {
         animal.feed();
 
         Human kuba = new Human();
-        kuba.setCar(new Car("Porsche", "911", "Red" ));
+        kuba.setCar(new Car("Porsche", "911", "Red"));
+
+        //test 3 and 4
+        kuba.setSalary(-1000.0);
+        kuba.setSalary(15000.0);
+        kuba.getSalary();
     }
 
 

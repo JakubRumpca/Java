@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Human {
 
@@ -50,4 +51,27 @@ public class Human {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(getPet(), human.getPet()) &&
+                Objects.equals(getCar(), human.getCar()) &&
+                Objects.equals(getSalary(), human.getSalary());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPet(), getCar(), getSalary());
+    }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "pet=" + pet +
+                ", car=" + car +
+                ", salary=" + salary +
+                '}';
+    }
 }

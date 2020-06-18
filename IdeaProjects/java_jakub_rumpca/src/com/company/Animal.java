@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Animal {
 
 
@@ -25,6 +27,28 @@ public class Animal {
         } else {
             this.weight -= 1.0;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return Objects.equals(species, animal.species) &&
+                Objects.equals(weight, animal.weight);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(species, weight);
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "species='" + species + '\'' +
+                ", weight=" + weight +
+                '}';
     }
 }
 

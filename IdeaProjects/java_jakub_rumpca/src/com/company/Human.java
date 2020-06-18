@@ -39,6 +39,15 @@ public class Human {
     }
 
     public void setCar(Car car) {
-        this.car = car;
+        if (car.getValue() < salary) {
+            System.out.println("You got a beautiful car ;]");
+            this.car = car;
+        } else if (salary > car.getValue() / 12) {
+            System.out.println("You got a beautiful car, in installments but who cares.. ");
+            this.car = car;
+        } else {
+            System.out.println("Go to pracuj.pl \"Sprawdz czy nie szukasz!!\" ");
+        }
     }
+
 }

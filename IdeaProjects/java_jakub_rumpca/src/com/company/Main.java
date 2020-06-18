@@ -16,6 +16,9 @@ public class Main {
         }
 
         animal.feed();
+
+        Human kuba = new Human();
+        kuba.setCar(new Car("Porsche", "911", "Red" ));
     }
 
 

@@ -1,8 +1,11 @@
-package com.company;
+package com.company.creatures;
+
+import com.company.Human;
+import com.company.Sellable;
 
 import java.util.Objects;
 
-public class Animal implements Sellable {
+public abstract class Animal implements Sellable, Feedable {
 
     final String species;
     private Double weight;
@@ -12,11 +15,17 @@ public class Animal implements Sellable {
         this.weight = weight;
     }
 
+    @Override
     public void feed() {
+        feed(1.0);
+    }
+
+    @Override
+    public void feed(double foodWeight) {
         if (this.weight <= 0) {
             System.out.println("Too late !! Fafik is in better place");
         } else {
-            this.weight += 1.0;
+            this.weight += foodWeight;
         }
     }
 

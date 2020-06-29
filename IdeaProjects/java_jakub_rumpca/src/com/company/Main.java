@@ -1,12 +1,15 @@
 package com.company;
 
+import com.company.creatures.Animal;
+import com.company.creatures.FarmAnimal;
+import com.company.creatures.Pet;
 import com.company.device.Device;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Animal animal = new Animal("dog", 2.0);
+        Animal animal = new Pet("dog", 2.0);
 
         //test
         for (int i = 0; i < 4; i++) {
@@ -56,8 +59,8 @@ public class Main {
         Phone iphone = new Phone("Iphone 3s", "Apple", 2008);
         Car opel = new Car("Opel", "Corsa", "pink", 2001);
         opel.setValue(800d);
-        Animal horse = new Animal("Kon Polski", 500d);
-        Animal frog = new Animal("Ropucha", 0.5d);
+        Animal horse = new FarmAnimal("Kon Polski", 500d);
+        Animal frog = new Pet("Ropucha", 0.5d);
 
         Human zygmunt = new Human();
         zygmunt.setCash(8000);
@@ -75,6 +78,18 @@ public class Main {
         opel.sell(zygmunt, czeslaw, 800);
         frog.sell(czeslaw, zygmunt, 1);
         horse.sell(czeslaw, zygmunt, 20000);
+
+        //test 9
+        Animal crazyFrog = new Pet("Ropucha", 0.5d);
+        crazyFrog.feed(0.3);
+        crazyFrog.feed();
+        crazyFrog.takeForAWalk();
+        crazyFrog.takeForAWalk();
+        crazyFrog.feed(0.9);
+
+        FarmAnimal crazyHorse = new FarmAnimal("Kon Polski", 500d);
+        crazyHorse.beEaten();
+
     }
 
 

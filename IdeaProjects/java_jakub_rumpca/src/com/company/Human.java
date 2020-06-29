@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.creatures.Animal;
+
 import java.util.Date;
 import java.util.Objects;
 

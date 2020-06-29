@@ -4,7 +4,7 @@ import com.company.device.Device;
 
 import java.util.Objects;
 
-public class Car extends Device {
+public abstract class Car extends Device {
 
     final String model;
     final String color;
@@ -19,6 +19,8 @@ public class Car extends Device {
         this.producer = producer;
         vinNumber = Math.random() * 1000000 + "";
     }
+
+    abstract void refuel();
 
     public Double getValue() {
         return value;

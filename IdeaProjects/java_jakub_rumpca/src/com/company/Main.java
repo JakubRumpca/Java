@@ -5,6 +5,11 @@ import com.company.creatures.FarmAnimal;
 import com.company.creatures.Pet;
 import com.company.device.Device;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -24,7 +29,7 @@ public class Main {
 
         //test 5
         Human kuba = new Human();
-        Car porsche = new Car("Porsche", "911", "Red", 2020);
+        Car porsche = new Electric("Porsche", "911", "Red", 2020);
         porsche.setValue(450000.0);
         kuba.setCar(porsche);
         kuba.setSalary(300000.0);
@@ -40,11 +45,11 @@ public class Main {
 
         //test 6
         System.out.println(kuba);
-        Car macan = new Car("Porsche", "Macan", "Black", 2018);
+        Car macan = new Diesel("Porsche", "Macan", "Black", 2018);
         macan.setValue(250000d);
-        Car cayenne = new Car("Porsche", "Cayenne", "Black", 2019);
+        Car cayenne = new Diesel("Porsche", "Cayenne", "Black", 2019);
         cayenne.setValue(550000d);
-        Car secondMacan = new Car("Porsche", "Macan", "Black", 2020);
+        Car secondMacan = new Diesel("Porsche", "Macan", "Black", 2020);
         secondMacan.setValue(250000d);
 
         System.out.println(macan.equals(cayenne));
@@ -57,7 +62,7 @@ public class Main {
 
         //test 8
         Phone iphone = new Phone("Iphone 3s", "Apple", 2008);
-        Car opel = new Car("Opel", "Corsa", "pink", 2001);
+        Car opel = new LPG("Opel", "Corsa", "pink", 2001);
         opel.setValue(800d);
         Animal horse = new FarmAnimal("Kon Polski", 500d);
         Animal frog = new Pet("Ropucha", 0.5d);
@@ -89,6 +94,22 @@ public class Main {
 
         FarmAnimal crazyHorse = new FarmAnimal("Kon Polski", 500d);
         crazyHorse.beEaten();
+
+        //test 10
+        iphone.installAnnApp("abc");
+        iphone.installAnnApp("abc", "2.25");
+        iphone.installAnnApp("abc", "4.3", "https://cheap-games/mario");
+        iphone.installAnnApp(Arrays.asList("app1", "app2"));
+        try {
+            iphone.installAnnApp(new URL("https", "games-server", "app5"));
+        } catch (MalformedURLException e) {
+            System.out.println("Incorrect app URL");
+            e.printStackTrace();
+        }
+
+        porsche.refuel();
+        opel.refuel();
+        macan.refuel();
 
     }
 

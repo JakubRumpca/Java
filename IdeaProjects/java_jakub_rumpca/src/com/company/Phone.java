@@ -1,13 +1,16 @@
 package com.company;
 
+import com.company.device.Device;
+
 import java.util.Objects;
 
-public class Phone {
+public class Phone extends Device {
 
     final String model;
     final String producer;
 
-    public Phone(String model, String producer) {
+    public Phone(String model, String producer, int yearOfProduction) {
+        super(model, producer, yearOfProduction);
         this.model = model;
         this.producer = producer;
     }
@@ -24,6 +27,11 @@ public class Phone {
     @Override
     public int hashCode() {
         return Objects.hash(model, producer);
+    }
+
+    @Override
+    public void turnOn() {
+        System.out.println("Phone turned on");
     }
 
     @Override

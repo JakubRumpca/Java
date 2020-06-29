@@ -49,8 +49,32 @@ public class Main {
         System.out.println(macan.equals(macan));
 
         // test 7
-        Device device = new Phone("S6", "Iphone", 2017 );
+        Device device = new Phone("Iphone X", "Apple", 2019 );
         device.turnOn();
+
+        //test 8
+        Phone iphone = new Phone("Iphone 3s", "Apple", 2008);
+        Car opel = new Car("Opel", "Corsa", "pink", 2001);
+        opel.setValue(800d);
+        Animal horse = new Animal("Kon Polski", 500d);
+        Animal frog = new Animal("Ropucha", 0.5d);
+
+        Human zygmunt = new Human();
+        zygmunt.setCash(8000);
+        zygmunt.setPhone(iphone);
+        zygmunt.setPet(horse);
+
+        Human czeslaw = new Human();
+        czeslaw.setCash(200);
+        czeslaw.setCar(opel);
+
+        iphone.sell(czeslaw, zygmunt, 1000);
+        czeslaw.setCash(200000);
+
+        iphone.sell(czeslaw, zygmunt, 1000);
+        opel.sell(zygmunt, czeslaw, 800);
+        frog.sell(czeslaw, zygmunt, 1);
+        horse.sell(czeslaw, zygmunt, 20000);
     }
 
 

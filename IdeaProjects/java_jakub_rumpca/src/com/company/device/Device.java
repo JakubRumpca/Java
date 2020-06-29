@@ -1,6 +1,8 @@
 package com.company.device;
 
-public abstract class Device {
+import com.company.Sellable;
+
+public abstract class Device implements Sellable {
 
     final String model;
     final String producer;

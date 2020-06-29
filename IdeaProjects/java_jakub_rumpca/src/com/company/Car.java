@@ -60,4 +60,26 @@ public class Car extends Device {
                 ", vinNumber='" + vinNumber + '\'' +
                 '}';
     }
+
+    @Override
+    public void sell(Human buyer, Human seller, double price) {
+        if (!seller.getCar().equals(this)) {
+            System.out.println("Seller doesn't own the car he is going to sell");
+            return;
+        }
+
+        if (buyer.getCash() < price) {
+            System.out.println("Buyer can not afford the car");
+            return;
+        }
+
+        buyer.setCash(buyer.getCash() - price);
+        seller.setCash(seller.getCash() + price);
+
+        buyer.setCar(seller.getCar());
+        seller.setCar(null);
+
+        System.out.println(String.format("An car has been sold for %s$", price));
+
+    }
 }

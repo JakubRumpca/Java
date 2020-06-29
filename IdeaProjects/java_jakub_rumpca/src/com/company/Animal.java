@@ -2,8 +2,7 @@ package com.company;
 
 import java.util.Objects;
 
-public class Animal {
-
+public class Animal implements Sellable {
 
     final String species;
     private Double weight;
@@ -49,6 +48,28 @@ public class Animal {
                 "species='" + species + '\'' +
                 ", weight=" + weight +
                 '}';
+    }
+
+    @Override
+    public void sell(Human buyer, Human seller, double price) {
+
+        if (!seller.getPet().equals(this)) {
+            System.out.println("Seller doesn't own the animal he is going to sell");
+            return;
+        }
+
+        if (buyer.getCash() < price) {
+            System.out.println("Buyer can not afford the animal");
+            return;
+        }
+
+        buyer.setCash(buyer.getCash() - price);
+        seller.setCash(seller.getCash() + price);
+
+        buyer.setPet(seller.getPet());
+        seller.setPet(null);
+
+        System.out.println(String.format("An animal has been sold for %s$", price));
     }
 }
 

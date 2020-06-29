@@ -41,4 +41,25 @@ public class Phone extends Device {
                 ", producer='" + producer + '\'' +
                 '}';
     }
+
+    @Override
+    public void sell(Human buyer, Human seller, double price) {
+        if (!seller.getPhone().equals(this)) {
+            System.out.println("Seller doesn't own the phone he is going to sell");
+            return;
+        }
+
+        if (buyer.getCash() < price) {
+            System.out.println("Buyer can not afford the phone");
+            return;
+        }
+
+        buyer.setCash(buyer.getCash() - price);
+        seller.setCash(seller.getCash() + price);
+
+        buyer.setPhone(seller.getPhone());
+        seller.setPhone(null);
+
+        System.out.println(String.format("A phone has been sold for %s$", price));
+    }
 }

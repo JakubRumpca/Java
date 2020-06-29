@@ -7,8 +7,25 @@ public class Human {
 
     private Animal pet;
     private Car car;
-
+    private Phone phone;
+    private double cash;
     private Double salary = 2000.0;
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Phone phone) {
+        this.phone = phone;
+    }
+
+    public double getCash() {
+        return cash;
+    }
+
+    public void setCash(double cash) {
+        this.cash = cash;
+    }
 
     public Double getSalary() {
         System.out.println(String.format("Salary requested at %s, current value %s", new Date(), this.salary));
@@ -40,6 +57,12 @@ public class Human {
     }
 
     public void setCar(Car car) {
+
+        if (car == null){
+            this.car = null;
+            return;
+        }
+
         if (car.getValue() < salary) {
             System.out.println("You got a beautiful car ;]");
             this.car = car;

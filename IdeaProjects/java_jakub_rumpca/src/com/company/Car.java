@@ -2,7 +2,10 @@ package com.company;
 
 import com.company.device.Device;
 
-import java.util.Objects;
+import java.time.OffsetDateTime;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class Car extends Device {
@@ -10,6 +13,8 @@ public abstract class Car extends Device {
     final String model;
     final String color;
     final String producer;
+    final Queue<Human> owners = new LinkedBlockingQueue<>();
+    final Queue<Transaction> transactions = new LinkedBlockingQueue<>();
 
     private final String vinNumber;
 
@@ -57,7 +62,9 @@ public abstract class Car extends Device {
 
     @Override
     public void sell(Human buyer, Human seller, double price) {
-        if (Stream.of(seller.getGarage()).filter(Objects::nonNull).noneMatch(car -> car.equals(this))) {
+        if (Stream.of(seller.getGarage()).filter(Objects::nonNull).noneMatch(car -> car.equals(this))
+                && transactions.peek() != null
+                && transactions.peek().getBuyer().equals(seller)) {
             throw new RuntimeException("Seller doesn't own the car he is going to sell");
         }
 
@@ -73,20 +80,36 @@ public abstract class Car extends Device {
         seller.setCash(seller.getCash() + price);
 
         for (int i = 0; i < buyer.getGarage().length; i++) {
-            if(buyer.getGarage()[i] == null) {
+            if (buyer.getGarage()[i] == null) {
                 buyer.getGarage()[i] = this;
                 break;
             }
         }
 
         for (int i = 0; i < seller.getGarage().length; i++) {
-            if(seller.getGarage()[i] == this) {
+            if (seller.getGarage()[i] == this) {
                 seller.getGarage()[i] = null;
                 break;
             }
         }
 
+        transactions.add(new Transaction(buyer, seller, price, OffsetDateTime.now()));
         System.out.println(String.format("An car has been sold for %s$", price));
 
     }
+
+    public boolean wasOwner(Human human) {
+        return transactions.stream().anyMatch(t -> t.getSeller().equals(human) || t.getBuyer().equals(human));
+    }
+
+    public boolean sellTransaction(Human buyer, Human seller) {
+        return transactions.stream().anyMatch(t -> t.getSeller().equals(seller) && t.getBuyer().equals(buyer));
+    }
+
+    public int sellTransactionCount(){
+        return transactions.size();
+    }
+
+
+
 }

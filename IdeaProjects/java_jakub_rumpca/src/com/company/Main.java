@@ -151,6 +151,35 @@ public class Main {
         }
 
 
+        //test 12
+        Human tom = new Human(3);
+        Car nissan = new LPG("Nissan", "350Z", "black", 2005, 50000d);
+        Car bmw = new Electric("BMW", "5", "black", 2020, 500000d);
+        tom.setCar(0, new Diesel("Audi", "RS6", "black", 2019, 750000d));
+        tom.setCar(1, nissan);
+        tom.setCar(2, bmw);
+
+        Human lisa = new Human(1);
+        lisa.setCash(1000000d);
+        nissan.sell(lisa, tom, 50000d);
+
+        nissan.sellTransaction(lisa, tom);
+        try {
+            bmw.sellTransaction(lisa, tom);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        Human amber = new Human(1);
+        amber.setCash(45000d);
+        nissan.sell(amber, lisa, 45000d);
+
+        System.out.println("Was there transaction between lisa and tom? " + nissan.sellTransaction(lisa, tom));
+
+        System.out.println("Number of transactions with Nissan : " + nissan.sellTransactionCount());
+
+        assert !nissan.wasOwner(jhon);
+        assert nissan.wasOwner(tom);
 
     }
 

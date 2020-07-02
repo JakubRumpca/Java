@@ -181,6 +181,32 @@ public class Main {
         assert !nissan.wasOwner(jhon);
         assert nissan.wasOwner(tom);
 
+
+        // test 13
+        Human jacob = new Human();
+        jacob.setCash(10000d);
+
+        Phone x = new Phone("Iphone X", "Apple", 2020, 4500d);
+        Application googleMaps = new Application("google Maps", "24.23", 0d);
+        Application uber = new Application("uber", "10.1", 0d);
+        Application msOfficeMobile = new Application("office mobile", "16", 60d);
+        Application superMario = new Application("super mario", "1.0.1", 10d);
+        Application abc = new Application("abc", "1.0.1", 10d);
+
+        x.install(googleMaps, jacob);
+        x.install(uber, jacob);
+        x.install(msOfficeMobile, jacob);
+        x.install(superMario, jacob);
+
+        System.out.println("Is GoogleMaps app installed: " + x.isInstalled(googleMaps));
+        System.out.println("Is abc app installed: " + x.isInstalled(abc));
+        System.out.println("Is Angry Birds app installed: " + x.isInstalled("Angry Birds"));
+        System.out.println("Is Uber app installed: " + x.isInstalled("uber"));
+        System.out.println("free apps: " + x.getFreeApps());
+        System.out.println("total apps value: " + x.appsValue());
+        System.out.println("apps in alphabetical order " + x.appNamesInAlphabeticalOrder());
+        System.out.println("apps by price " + x.appNamesByPrice());
+
     }
 
 

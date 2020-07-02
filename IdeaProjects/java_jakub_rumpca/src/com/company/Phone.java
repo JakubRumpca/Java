@@ -3,8 +3,11 @@ package com.company;
 import com.company.device.Device;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Phone extends Device {
 
@@ -14,6 +17,7 @@ public class Phone extends Device {
 
     final String model;
     final String producer;
+    private final List<Application> apps = new ArrayList<>();
 
     public Phone(String model, String producer, int yearOfProduction, Double value) {
         super(model, producer, yearOfProduction, value);
@@ -43,6 +47,45 @@ public class Phone extends Device {
 
     private void install(String name, String version, String server ){
         System.out.println(String.format("App %s v%s installed from %s", name, version, server));
+    }
+
+    public void install(Application app, Human buyer) {
+        if (buyer.getCash() < app.getPrice()) {
+            throw new RuntimeException("This guy cannot afford the app " + app.getName());
+        }
+
+        apps.add(app);
+        buyer.setCash(buyer.getCash() - app.getPrice());
+    }
+
+    public boolean isInstalled(Application app) {
+        return apps.contains(app);
+    }
+
+    public boolean isInstalled(String appName) {
+        return apps.stream().anyMatch(app -> app.getName().equals(appName));
+    }
+
+    public List<Application> getFreeApps(){
+        return apps.stream().filter(app -> app.getPrice() == 0d).collect(Collectors.toList());
+    }
+
+    public double appsValue(){
+        return apps.stream().map(Application::getPrice).reduce(0d, Double::sum);
+    }
+
+    public List<String> appNamesInAlphabeticalOrder(){
+        return apps.stream().map(Application::getName).sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+    }
+
+    public List<String> appNamesByPrice(){
+        return apps.stream().sorted((a, b) -> {
+            if (a.getPrice() == b.getPrice()) {
+                return 0;
+            } else {
+                return a.getPrice() < b.getPrice() ? -1 : 1;
+            }
+        }).map(Application::getName).collect(Collectors.toList());
     }
 
     @Override

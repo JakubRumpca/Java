@@ -8,7 +8,6 @@ import com.company.device.Device;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Main {
 
@@ -29,13 +28,13 @@ public class Main {
 
         //test 5
         Human kuba = new Human();
-        Car porsche = new Electric("Porsche", "911", "Red", 2020);
-        porsche.setValue(450000.0);
-        kuba.setCar(porsche);
-        kuba.setSalary(300000.0);
-        kuba.setCar(porsche);
-        kuba.setSalary(500000.0);
-        kuba.setCar(porsche);
+        Car porsche = new Electric("Porsche", "911", "Red", 2020, 450000.0);
+        // not relevant anymore
+//        kuba.setCar(porsche);
+//        kuba.setSalary(300000.0);
+//        kuba.setCar(porsche);
+//        kuba.setSalary(500000.0);
+//        kuba.setCar(porsche);
 
 
         //test 3 and 4
@@ -45,25 +44,21 @@ public class Main {
 
         //test 6
         System.out.println(kuba);
-        Car macan = new Diesel("Porsche", "Macan", "Black", 2018);
-        macan.setValue(250000d);
-        Car cayenne = new Diesel("Porsche", "Cayenne", "Black", 2019);
-        cayenne.setValue(550000d);
-        Car secondMacan = new Diesel("Porsche", "Macan", "Black", 2020);
-        secondMacan.setValue(250000d);
+        Car macan = new Diesel("Porsche", "Macan", "Black", 2018, 250000d);
+        Car cayenne = new Diesel("Porsche", "Cayenne", "Black", 2019, 550000d);
+        Car secondMacan = new Diesel("Porsche", "Macan", "Black", 2020, 250000d);
 
         System.out.println(macan.equals(cayenne));
         System.out.println(macan.equals(secondMacan));
         System.out.println(macan.equals(macan));
 
         // test 7
-        Device device = new Phone("Iphone X", "Apple", 2019 );
+        Device device = new Phone("Iphone X", "Apple", 2019, 4500d);
         device.turnOn();
 
         //test 8
-        Phone iphone = new Phone("Iphone 3s", "Apple", 2008);
-        Car opel = new LPG("Opel", "Corsa", "pink", 2001);
-        opel.setValue(800d);
+        Phone iphone = new Phone("Iphone 3s", "Apple", 2008, 300d);
+        Car opel = new LPG("Opel", "Corsa", "pink", 2001, 800d);
         Animal horse = new FarmAnimal("Kon Polski", 500d);
         Animal frog = new Pet("Ropucha", 0.5d);
 
@@ -74,7 +69,7 @@ public class Main {
 
         Human czeslaw = new Human();
         czeslaw.setCash(200);
-        czeslaw.setCar(opel);
+        czeslaw.setCar(0, opel);
 
         iphone.sell(czeslaw, zygmunt, 1000);
         czeslaw.setCash(200000);
@@ -110,6 +105,52 @@ public class Main {
         porsche.refuel();
         opel.refuel();
         macan.refuel();
+
+        // test 11
+        Human andrew = new Human(3);
+        Car mustang = new LPG("Ford", "Mustang", "black", 1970, 250000d);
+        Car audi = new Electric("Audi", "Etron", "black", 2020, 500000d);
+        andrew.setCar(0, new Diesel("Audi", "RS6", "black", 2019, 750000d));
+        andrew.setCar(1, audi);
+        andrew.setCar(2, mustang);
+        try {
+            andrew.setCar(3, new Diesel("Audi", "RS6", "black", 2020, 750000d));
+        } catch (RuntimeException ex) {
+            System.out.println("caught exception, number of cars attempted to park in a garage exceeds it's capacity");
+        }
+
+        System.out.println("Total cars value: " + andrew.getCarsValue());
+
+        System.out.println("Ordered list of cars by year of production (ascending)" + andrew.getCarsByYearOfProduction());
+
+
+        Human jhon = new Human(1);
+        // Jhon doesn't have enough money
+        jhon.setCash(35000d);
+        try {
+            mustang.sell(jhon, andrew, 275000d);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        jhon.setCash(350000d);
+        mustang.sell(jhon, andrew, 275000d);
+
+        //Andrew cannot sell a car he doesn't own
+        Car daihatsu = new LPG("Daihatsu", "XYZ", "?", 1995, 123.50);
+        try {
+            daihatsu.sell(jhon, andrew, 100);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        //Jhon's garage is full
+        try {
+            audi.sell(jhon, andrew, 500000d);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
 
     }
 

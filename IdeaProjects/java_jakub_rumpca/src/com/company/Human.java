@@ -2,16 +2,32 @@ package com.company;
 
 import com.company.creatures.Animal;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Human {
 
     private Animal pet;
-    private Car car;
+    private final Car[] garage;
     private Phone phone;
     private double cash;
     private Double salary = 2000.0;
+
+    public Human() {
+        garage = new Car[5];
+    }
+
+    public Human(int carPlaces) {
+        garage = new Car[carPlaces];
+    }
+
+    public int getCarPlaces() {
+        return garage.length;
+    }
 
     public Phone getPhone() {
         return phone;
@@ -54,26 +70,30 @@ public class Human {
         this.pet = pet;
     }
 
-    public Car getCar() {
-        return car;
+    public Car[] getGarage() {
+        return garage;
     }
 
-    public void setCar(Car car) {
+    public Car getCar(int position) {
+        return garage[position];
+    }
 
-        if (car == null){
-            this.car = null;
-            return;
-        }
+    public void setCar(int position, Car car) {
+        garage[position] = car;
+    }
 
-        if (car.getValue() < salary) {
-            System.out.println("You got a beautiful car ;]");
-            this.car = car;
-        } else if (salary > car.getValue() / 12) {
-            System.out.println("You got a beautiful car, in installments but who cares.. ");
-            this.car = car;
-        } else {
-            System.out.println("Go to pracuj.pl \"Sprawdz czy nie szukasz!!\" ");
-        }
+    public Double getCarsValue() {
+        return Stream.of(garage).map(Car::getValue).reduce(0d, Double::sum);
+    }
+
+    public List<Car> getCarsByYearOfProduction() {
+        return Stream.of(garage).sorted((a, b) -> {
+            if (a.getYearOfProduction() == b.getYearOfProduction()) {
+                return 0;
+            } else {
+                return a.getYearOfProduction() > b.getYearOfProduction() ? 1 : -1;
+            }
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -81,21 +101,25 @@ public class Human {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(getPet(), human.getPet()) &&
-                Objects.equals(getCar(), human.getCar()) &&
+        return Double.compare(human.getCash(), getCash()) == 0 &&
+                Objects.equals(getPet(), human.getPet()) &&
+                Objects.equals(garage, human.garage) &&
+                Objects.equals(getPhone(), human.getPhone()) &&
                 Objects.equals(getSalary(), human.getSalary());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPet(), getCar(), getSalary());
+        return Objects.hash(getPet(), garage, getPhone(), getCash(), getSalary());
     }
 
     @Override
     public String toString() {
         return "Human{" +
                 "pet=" + pet +
-                ", car=" + car +
+                ", garage=" + garage +
+                ", phone=" + phone +
+                ", cash=" + cash +
                 ", salary=" + salary +
                 '}';
     }

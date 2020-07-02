@@ -15,8 +15,8 @@ public class Phone extends Device {
     final String model;
     final String producer;
 
-    public Phone(String model, String producer, int yearOfProduction) {
-        super(model, producer, yearOfProduction);
+    public Phone(String model, String producer, int yearOfProduction, Double value) {
+        super(model, producer, yearOfProduction, value);
         this.model = model;
         this.producer = producer;
     }
